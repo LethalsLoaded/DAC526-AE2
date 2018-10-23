@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\aodwald\desktop\university work (18-19)\semester 1\programming\dac526-ae2\vector2.h(10): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\aodwald\desktop\university work (18-19)\semester 1\programming\dac526-ae2\source.cpp(15): error C2683: 'dynamic_cast': 'Component' is not a polymorphic type
+  c:\users\aodwald\desktop\university work (18-19)\semester 1\programming\dac526-ae2\component.h(3): note: see declaration of 'Component'
