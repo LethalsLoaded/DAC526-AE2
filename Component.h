@@ -5,7 +5,7 @@ class Component
 private:
 	
 public:
-	void Spawn();
-	void Update();
-	void Destroy();
+	virtual void Spawn() = 0 {}
+	virtual void Update() = 0 {}
+	virtual void Destroy() = 0 {}
 };

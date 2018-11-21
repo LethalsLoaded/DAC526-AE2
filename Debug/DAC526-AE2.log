@@ -1,6 +1,8 @@
-﻿  GameObject.cpp
+﻿  Block.cpp
+  GameObject.cpp
 c:\users\aodwald\desktop\university work (18-19)\semester 1\programming\dac526-ae2\vector2.h(10): warning C4227: anachronism used: qualifiers on reference are ignored
   Source.cpp
 c:\users\aodwald\desktop\university work (18-19)\semester 1\programming\dac526-ae2\vector2.h(10): warning C4227: anachronism used: qualifiers on reference are ignored
   Generating Code...
+  LINK : C:\Users\AOdwald\Desktop\University Work (18-19)\Semester 1\Programming\Debug\DAC526-AE2.exe not found or not built by the last incremental link; performing full link
   DAC526-AE2.vcxproj -> C:\Users\AOdwald\Desktop\University Work (18-19)\Semester 1\Programming\Debug\DAC526-AE2.exe
