@@ -4,7 +4,7 @@
 
 class Block : public Component
 {
-	std::string name;
+	std::string test;
 
 public:
 	Block();

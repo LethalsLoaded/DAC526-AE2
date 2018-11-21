@@ -9,11 +9,10 @@ int main()
 	GameObject* myGO = new GameObject("Test", v2);
 
 	std::cout << myGO->GetName() << std::endl;
-	_getch();
+	//_getch();
 
 	myGO->AddComponent<Block>();
-	Block* myBlock = dynamic_cast<Block&>(*myGO->GetComponent<Block>());
-	std::string name =myBlock->GetName();
-	std::cout << name;
+	Block* myBlock = static_cast<Block*>(myGO->GetComponent<Block>());
+	std::cout << myBlock->GetName();
 	_getch();
 }

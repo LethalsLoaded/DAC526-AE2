@@ -2,10 +2,10 @@
 
 Block::Block()
 {
-	this->name = "New Block";
+	this->test = "New Block";
 }
 
 std::string Block::GetName()
 {
-	return this->name;
+	return this->test;
 }
