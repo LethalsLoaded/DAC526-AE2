@@ -1,75 +1,72 @@
-#pragma once
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
 #include <string>
 #include <vector>
-#include "Component.h"
 #include "Vector2.h"
-#include "Block.h"
+#include "ID.h"
+
 
 class GameObject
 {
-	std::string m_name;
+protected:
 	std::vector<Component*> m_components;
-	std::vector<void*> m_newComponents;
-
-	// Level, NPC, Player
-	Vector2* position;
+	
 public:
+	ID M_id;
+	std::string M_name;
+	Vector2*	M_position;
 	GameObject(std::string name, Vector2* initialPosition);
 	std::vector<Component*> GetComponents();
-	template <class Q> Component* GetComponent()
+	template <class Q> Q* GetComponent()
 	{
-		//	if (typeid(Component) != typeid(Q)) return nullptr;
-
-		//	Component* returnItem = nullptr;
-		//	for (Component* i : m_components)
-		//	{
-		//		//if (typeid(*i) != typeid(Q))
-		//		//	continue;
-		//		//returnItem = static_cast<Component*>(i);
-		//		//break;
-		//	}
-		//	return returnItem;
-
-
-		/*Component* returnItem = nullptr;
 		if (!std::is_base_of<Component, Q>::value)
-			return returnItem;*/
-/*
-		for(Component* i : m_components)
 		{
-			if (typeid(*i->attachedComponent) != typeid(Q))
-				continue;
-			returnItem = i;
-			break;
-		}
-*/
-		if (!std::is_base_of<Component, Q>::value)
+			printf("You tried to access a component which the GameObject does not contain.");
 			return nullptr;
-		Component* returnItem = nullptr;
+		}
 
-		for(Component *p : m_components)
+		for (Component *p : m_components)
 		{
 			const std::type_info& tiQ = typeid(Q);
 			const std::type_info& tiComponent = typeid(*p);
 
+			// Debug code to get the names of the classes
 			std::string nameQ{ tiQ.name() };
 			std::string nameComp{ tiComponent.name() };
 
 			if (tiQ.name() != tiComponent.name())
 				continue;
-			returnItem = p;
+			return dynamic_cast<Q*>(p);
 		}
-
-		return returnItem;
-		
+		// If it gets this far we haven't found the component
+		return nullptr;
 	}
-	template <class Q> void AddComponent()
+
+	template <class Q> Q* AddComponent()
 	{
 		//Vector2* myVector = new Vector2(x, y);
 		Q* newComponent = new Q;
 		this->m_components.push_back(static_cast<Component*>(newComponent));
+		static_cast<Component*>(newComponent)->SetObject(this);
+		return newComponent;
 	}
 
-	std::string GetName();
+	template <class Q> void DeleteComponent()
+	{
+		for(int i = 0; i < m_components.size(); i++)
+		{
+			const std::type_info& tiQ = typeid(Q);
+			const std::type_info& tiComponent = typeid(*m_components[i]);
+			if (tiQ.name() != tiComponent.name()) continue;
+			m_components.erase(i);
+			delete(m_components[i]);
+			break;
+		}
+	}
+
+	static GameObject* FindWithName(std::string name);
+	static GameObject* FindWithID(ID id);
 };
+
+#endif

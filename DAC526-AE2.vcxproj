@@ -85,7 +85,15 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>Components.h</PrecompiledHeaderFile>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -110,16 +118,27 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>Components.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="ID.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,11 +147,14 @@
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ID.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="NonPlayableCharacter.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteAnimator.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Vector2.h" />
