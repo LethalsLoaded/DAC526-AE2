@@ -5,7 +5,7 @@
 
 class Block : public Component
 {
-	Entity m_entity;
+	//Entity m_entity;
 
 public:
 	bool M_isWall;

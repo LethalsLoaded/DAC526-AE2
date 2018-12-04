@@ -47,6 +47,9 @@ Level::Level(std::string path_to_level_data)
 				// ENEMY
 				case 'E':
 					{
+						new GameObject("Floor",
+						new Vector2(x_spacing, y_spacing),
+						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
 						new_game_object->M_name = "Enemy";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/enemy.bmp"));
 						//auto const npc = new_game_object->AddComponent<NonPlayableCharacter>();
@@ -55,6 +58,9 @@ Level::Level(std::string path_to_level_data)
 				// TARGET
 				case 'T':
 					{
+						new GameObject("Floor",
+						new Vector2(x_spacing, y_spacing),
+						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
 						new_game_object->M_name = "Target";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/target.bmp"));
 						//auto const target = new_game_object->AddComponent<NonPlayableCharacter>();
@@ -62,9 +68,13 @@ Level::Level(std::string path_to_level_data)
 					break;
 				case 'P':
 					{
-						new_game_object->M_name = "Player";
+						new GameObject("Floor", 
+							new Vector2(x_spacing, y_spacing),
+							Sprite::GetOrCreateSprite("Assets/floor.bmp"));
+						new_game_object->M_name = "IM HERE PLZ";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/player.bmp"));
 						auto const player = new_game_object->AddComponent<Player>();
+						new_game_object->M_render_order = 10;
 					}
 					break;
 				case '.':
@@ -89,6 +99,8 @@ void Level::Render()
 {
 	if (!M_is_active) return;
 
+	std::sort(m_p_game_objects.begin(), m_p_game_objects.end());
+	
 	for(auto game_object : m_p_game_objects)
 	{
 		for(auto component : game_object->GetComponents())

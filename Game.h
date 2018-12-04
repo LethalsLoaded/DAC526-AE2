@@ -25,8 +25,6 @@ private:
 	static Game* m_p_game_instance;
 	static const std::string ASSETS_FOLDER;
 
-	const int FRAMES_PER_SECOND = 60;
-	const int FRAME_DELAY = 1000 / FRAMES_PER_SECOND;
 	Uint32 m_frame_start;
 	int m_frame_time;
 
@@ -44,6 +42,8 @@ private:
 protected:
 	void FirstSetup();
 public:
+	static const int FRAMES_PER_SECOND = 60;
+	const int FRAME_DELAY = 1000 / FRAMES_PER_SECOND;
 	static const int RELATIVE_TILE_SPACE = 32;
 
 	//std::vector<Sprite*> M_p_sprites;

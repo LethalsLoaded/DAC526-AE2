@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "InputHandler.h"
 
+//const int Game::FRAMES_PER_SECOND = 60;
 Game* Game::m_p_game_instance = nullptr;
 const std::string Game::ASSETS_FOLDER = "Assets";
 
@@ -8,7 +9,7 @@ void Game::FirstSetup()
 {
 	// Initialize SDL
 	SDL_Init(SDL_INIT_VIDEO);
-	//TEXT: TTF_Init();
+	//TODO: TEXT: TTF_Init();
 
 	/*****************************************/
 
@@ -91,11 +92,13 @@ void Game::SetGameState(GameState game_state)
 
 void Game::UpdateGame()
 {
+	// Update the input handler
+	InputHandler::GetInstance()->Update();
+
 	m_frame_start = SDL_GetTicks();
 	SDL_RenderClear(m_p_renderer);
 
-	// Update the input handler
-	InputHandler::GetInstance()->Update();
+
 
 	// Update the renderer
 	m_p_current_level->Render();

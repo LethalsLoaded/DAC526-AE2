@@ -16,6 +16,8 @@ public:
 	void Spawn() override;
 	void Update() override;
 	void Destroy() override;
+protected:
+	void ExecuteAction(Action action) override {}
 };
 
 #endif

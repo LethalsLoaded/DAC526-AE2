@@ -5,12 +5,14 @@
 class InputHandler
 {
 private:
+	SDL_Event m_event;
 	static InputHandler* m_p_instance;
 	const Uint8* m_p_keyboard_states;
 public:
 	InputHandler()
 	{
 		m_p_instance = this;
+		m_p_keyboard_states = nullptr;
 	}
 
 	static InputHandler* GetInstance()
@@ -21,6 +23,9 @@ public:
 	}
 	void Update();
 	bool IsKeyPressed(SDL_Scancode key);
+
+	void OnKeyDown();
+	void OnKeyUp();
 };
 
 #endif

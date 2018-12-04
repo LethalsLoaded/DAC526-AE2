@@ -19,6 +19,7 @@ public:
 	ID M_id;
 	std::string M_name;
 	Vector2*	M_position;
+	int M_render_order = 1;
 	GameObject(std::string name, Vector2* initial_position, Sprite* sprite = nullptr);
 	~GameObject();
 	std::vector<Component*> GetComponents();
@@ -71,8 +72,31 @@ public:
 		}
 	}
 
+	template <class Q> static std::vector<GameObject*> GetGameObjectsWithComponent()
+	{
+		std::vector<GameObject*> return_vector;
+		if (!std::is_base_of<Component, Q>::value)
+		{
+			printf("You tried to access an object which is not a component.");
+			return return_vector;
+		}
+		const std::type_info& ti_target = typeid(Q);
+		for(auto game_object : Game::GetInstance()->GetActiveLevel()->GetGameObjects())
+		{
+			for(auto component : game_object->GetComponents())
+			{
+				const std::type_info& ti_component = typeid(*component);
+				if(ti_target.name() != ti_component.name()) continue;
+				return_vector.push_back(game_object);
+			}
+		}
+
+		return return_vector;
+	}
+
 	static GameObject* FindWithName(std::string name);
 	static GameObject* FindWithID(ID id);
 };
 
+bool operator<(const GameObject & ob1, const GameObject & ob2);
 #endif
