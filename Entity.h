@@ -11,7 +11,8 @@ enum Action
 	MOVE_RIGHT,
 	INTERACT,
 	USE,
-	TOGGLE_PAUSE
+	TOGGLE_PAUSE,
+	LAST_ACTION
 };
 
 enum Team
@@ -53,6 +54,7 @@ class Entity
 
 protected:
 	std::queue<Action> m_action_queue;
+	void ExecuteAction(Action action);
 };
 
 #endif

@@ -6,6 +6,9 @@
 #include "Vector2.h"
 #include "ID.h"
 
+#include "Component.h"
+
+class Sprite;
 
 class GameObject
 {
@@ -16,40 +19,43 @@ public:
 	ID M_id;
 	std::string M_name;
 	Vector2*	M_position;
-	GameObject(std::string name, Vector2* initialPosition);
+	GameObject(std::string name, Vector2* initial_position, Sprite* sprite = nullptr);
+	~GameObject();
 	std::vector<Component*> GetComponents();
 	template <class Q> Q* GetComponent()
 	{
+		// Checking if object is derived from Component
 		if (!std::is_base_of<Component, Q>::value)
 		{
-			printf("You tried to access a component which the GameObject does not contain.");
+			printf("You tried to access an object which is not a component.");
 			return nullptr;
 		}
 
-		for (Component *p : m_components)
+		// Looking for the component
+		for (auto *p : m_components)
 		{
-			const std::type_info& tiQ = typeid(Q);
-			const std::type_info& tiComponent = typeid(*p);
+			const auto& type_info_q = typeid(Q);
+			const auto& type_info_component = typeid(*p);
 
-			// Debug code to get the names of the classes
-			std::string nameQ{ tiQ.name() };
-			std::string nameComp{ tiComponent.name() };
-
-			if (tiQ.name() != tiComponent.name())
+			if (type_info_q.name() != type_info_component.name())
 				continue;
 			return dynamic_cast<Q*>(p);
 		}
+
 		// If it gets this far we haven't found the component
+		printf("You tried to access a component which the GameObject does not contain.");
 		return nullptr;
 	}
 
 	template <class Q> Q* AddComponent()
 	{
 		//Vector2* myVector = new Vector2(x, y);
-		Q* newComponent = new Q;
-		this->m_components.push_back(static_cast<Component*>(newComponent));
-		static_cast<Component*>(newComponent)->SetObject(this);
-		return newComponent;
+		Q* new_component = new Q;
+		Component* p_new_component_cast = static_cast<Component*>(new_component);
+		this->m_components.push_back(p_new_component_cast);
+		p_new_component_cast->SetObject(this);
+		p_new_component_cast->Spawn();
+		return new_component;
 	}
 
 	template <class Q> void DeleteComponent()

@@ -16,35 +16,40 @@ Game* SetupGame()
 	return p_game;
 }
 
-Level* TestLevel()
-{
-	auto my_level = new Level();
-	Game::GetInstance()->SetLevel(my_level);
-	auto middle_block = new GameObject("Test block", new Vector2(50, 50));
-	auto sr = middle_block->AddComponent<SpriteRenderer>();
-	auto mySprite = Sprite::GetOrCreateSprite("Assets/blank_test.bmp");
-	sr->ChangeSprite(mySprite);
-
-	return my_level;
-}
+//Level* TestLevel()
+//{
+//	auto my_level = new Level();
+//	Game::GetInstance()->SetLevel(my_level);
+//
+//	const auto middle_block_sprite = Sprite::GetOrCreateSprite("Assets/blank_test.bmp");
+//	auto other_block_sprite = Sprite::GetOrCreateSprite("Assets/blank_test.bmp");
+//	auto middle_block = new GameObject("Test block", new Vector2(50, 50), middle_block_sprite);
+//
+//	auto another_block = new GameObject("Another Block", new Vector2(150, 29), other_block_sprite);
+//	middle_block->M_position->Translate( Vector2(50, 50));
+//	delete(another_block);
+//	other_block_sprite = Sprite::GetOrCreateSprite("Assets/blank_test.bmp");
+//	auto yet_another_block = new GameObject("Another Block", new Vector2(150, 29), other_block_sprite);
+//
+//	
+//
+//	return my_level;
+//}
 
 int main()
 {
 	srand(time(nullptr));
 	auto game = SetupGame();
-	auto gameLevel = TestLevel();
+	//auto gameLevel = TestLevel();
 
 	Vector2* v2 = new Vector2(0.0f, 0.0f);
-	printf("*-------- ADDING GAME OBJECT -----------*\n");
 
 	GameObject* myGO = new GameObject("Test", v2);
 
 	std::cout << myGO->M_name << std::endl;
 
-	printf("*------- ADDING SPRITE RENDERER ----------*\n");
 
 	myGO->AddComponent<Block>();
-	printf("*------- ADDING BLOCK COMPONENT ----------*\n");
 
 	myGO->AddComponent<SpriteRenderer>();
 

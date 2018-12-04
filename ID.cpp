@@ -27,7 +27,6 @@ unsigned long long ID::GenerateID()
 	for (int i = 0; i < 15; i++) {
 		auto ran = rand() % 10;
 		ss << ran;
-		printf("R[%d] num %d\n", i, ran);
 	}
 	
 	unsigned long long result;

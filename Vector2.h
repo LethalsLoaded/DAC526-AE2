@@ -8,5 +8,5 @@ public:
 public:
 	Vector2(float xPos, float yPos);
 	static Vector2 Translate(const Vector2& const vectorA, const Vector2& const vectorB);
-	Vector2 Translate(const Vector2& vectorB) const;
+	Vector2 Translate(const Vector2& vectorB);
 };

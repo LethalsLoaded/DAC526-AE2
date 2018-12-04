@@ -1,9 +1,6 @@
 #ifndef ID_H
 #define ID_H
 
-#include "Component.h"
-#include "GameObject.h"
-
 class ID
 {
 private:

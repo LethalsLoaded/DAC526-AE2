@@ -19,5 +19,6 @@ public:
 	Sprite* m_p_sprite;
 
 	void ChangeSprite(Sprite* sprite);
+	~SpriteRenderer();
 };
 #endif

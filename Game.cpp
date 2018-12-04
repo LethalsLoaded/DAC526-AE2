@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "InputHandler.h"
 
 Game* Game::m_p_game_instance = nullptr;
 const std::string Game::ASSETS_FOLDER = "Assets";
@@ -52,8 +53,8 @@ void Game::FirstSetup()
 
 	/*****************************************/
 
-	if (m_p_current_level == nullptr)
-		printf("Make a new level here.");
+	if (m_p_level_manager == nullptr)
+		m_p_level_manager = new LevelManager();
 
 }
 
@@ -93,10 +94,11 @@ void Game::UpdateGame()
 	m_frame_start = SDL_GetTicks();
 	SDL_RenderClear(m_p_renderer);
 
-	// my time = 0
+	// Update the input handler
+	InputHandler::GetInstance()->Update();
+
+	// Update the renderer
 	m_p_current_level->Render();
-	// my time = 12
-	// pritnf(level render = my_time);
 
 	SDL_RenderPresent(m_p_renderer);
 

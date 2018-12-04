@@ -21,4 +21,12 @@ SpriteRenderer::SpriteRenderer()
 void SpriteRenderer::ChangeSprite(Sprite* sprite)
 {
 	m_p_sprite = sprite;
+	Game::GetInstance()->M_p_sprites[sprite] = m_p_game_object;
+}
+
+SpriteRenderer::~SpriteRenderer()
+{
+	Game::GetInstance()->M_p_sprites.erase(m_p_sprite);
+	if (Game::GetInstance()->M_p_sprites.find(m_p_sprite) == Game::GetInstance()->M_p_sprites.end())
+		delete(m_p_sprite);
 }

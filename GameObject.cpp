@@ -1,12 +1,27 @@
 #include "GameObject.h"
 #include "Game.h"
+#include "SpriteRenderer.h"
 
-GameObject::GameObject(std::string name, Vector2* initialPosition)
+
+
+GameObject::GameObject(std::string name, Vector2 * initial_position, Sprite * sprite)
 {
 	M_name = name;
-	M_position = initialPosition;
+	M_position = initial_position;
+	//Game::GetInstance()->GetActiveLevel()->AddGameObjectToLevel(this);
 
-	Game::GetInstance()->GetActiveLevel()->AddGameObjectToLevel(this);
+	// If we were given a sprite
+	if (sprite == nullptr) return;
+	auto sprite_renderer = AddComponent<SpriteRenderer>();
+	sprite_renderer->ChangeSprite(sprite);
+}
+
+GameObject::~GameObject()
+{
+	for (auto component : m_components)
+		delete(component);
+	m_components.empty();
+
 }
 
 std::vector<Component*> GameObject::GetComponents()

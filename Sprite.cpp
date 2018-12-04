@@ -10,10 +10,11 @@ void Sprite::ChangeSpritePath(std::string file_path)
 Sprite* Sprite::GetOrCreateSprite(std::string file_path)
 {
 	Sprite* return_sprite = nullptr;
+
 	for(auto i : Game::GetInstance()->M_p_sprites)
 	{
-		if (i->GetFilePath() != file_path) continue;
-		return_sprite = i;
+		if (i.first->GetFilePath() != file_path) continue;
+		return_sprite = i.first;
 		break;
 	}
 

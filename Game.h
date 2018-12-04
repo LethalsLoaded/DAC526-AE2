@@ -6,6 +6,8 @@
 #include <vector>
 #include <SDL.h>
 #include "Sprite.h"
+#include <unordered_map>
+#include "LevelManager.h"
 
 enum GameState
 {
@@ -37,10 +39,15 @@ private:
 	SDL_Window* m_p_window = nullptr;
 	SDL_Renderer* m_p_renderer = nullptr;
 
+	LevelManager* m_p_level_manager = nullptr;
+
 protected:
 	void FirstSetup();
 public:
-	std::vector<Sprite*> M_p_sprites;
+	static const int RELATIVE_TILE_SPACE = 32;
+
+	//std::vector<Sprite*> M_p_sprites;
+	std::unordered_map<Sprite*, GameObject*> M_p_sprites;
 
 	static Game* GetInstance();
 	Game(int window_height, int window_width, std::string window_name, Level* force_level = nullptr);
@@ -56,6 +63,21 @@ public:
 	void SetLevel(Level* level)
 	{
 		m_p_current_level = level;
+	}
+
+	void AddGameLevel(Level* level)
+	{
+		m_p_game_levels.push_back(level);
+	}
+
+	void SetActiveLevel(Level* level)
+	{
+		m_p_current_level = level;
+	}
+
+	void SetWindowSize(Vector2 new_size) const
+	{
+		SDL_SetWindowSize(m_p_window, new_size.m_x, new_size.m_y);
 	}
 };
 
