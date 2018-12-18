@@ -10,12 +10,12 @@ class NonPlayableCharacter : public Component, public Entity
 {
 private:
 	Vector2 m_target_location;
-	GameObject m_target_entity, m_threat_entity, m_target_perk;
+	bool m_is_running = false;
 
 public:
-	void Spawn() override;
-	void Update() override;
-	void Destroy() override;
+	void Spawn() override {}
+	void Update() override {}
+	void Destroy() override {}
 protected:
 	void ExecuteAction(Action action) override {}
 };

@@ -57,11 +57,6 @@ GameObject * GameObject::FindWithName(std::string name)
 //}
 
 
-bool operator<(const GameObject &ob1, const GameObject &ob2)
-{
-	printf("SORTING");
-	return ob1.M_render_order < ob2.M_render_order;
-}
 
 
 

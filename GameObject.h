@@ -9,12 +9,18 @@
 #include "Component.h"
 
 class Sprite;
-
+enum Direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+};
 class GameObject
 {
 protected:
 	std::vector<Component*> m_components;
-	
+	Direction m_direction = NORTH;
 public:
 	ID M_id;
 	std::string M_name;
@@ -23,6 +29,16 @@ public:
 	GameObject(std::string name, Vector2* initial_position, Sprite* sprite = nullptr);
 	~GameObject();
 	std::vector<Component*> GetComponents();
+
+	Direction GetDirection() const
+	{
+		return m_direction;
+	}
+	void SetDirection(Direction direction)
+	{
+		m_direction = direction;
+	}
+
 	template <class Q> Q* GetComponent()
 	{
 		// Checking if object is derived from Component
@@ -46,6 +62,21 @@ public:
 		// If it gets this far we haven't found the component
 		printf("You tried to access a component which the GameObject does not contain.");
 		return nullptr;
+	}
+
+	template <class Q> static bool GameObjectHasComponent(GameObject* game_object)
+	{
+		// Looking for the component
+		for (auto *p : game_object->m_components)
+		{
+			const auto& type_info_q = typeid(Q);
+			const auto& type_info_component = typeid(*p);
+
+			if (type_info_q.name() != type_info_component.name())
+				continue;
+			return true;
+		}
+		return false;
 	}
 
 	template <class Q> Q* AddComponent()
@@ -96,7 +127,17 @@ public:
 
 	static GameObject* FindWithName(std::string name);
 	static GameObject* FindWithID(ID id);
+
 };
 
-bool operator<(const GameObject & ob1, const GameObject & ob2);
+struct CallMeSomething
+{
+	bool operator()(GameObject *ob1, GameObject *ob2) const
+	{
+		return ob1->M_render_order < ob2->M_render_order;
+	}
+
+};
+
+
 #endif

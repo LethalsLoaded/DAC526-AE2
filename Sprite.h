@@ -3,12 +3,15 @@
 #include <string>
 #include <SDL.h>
 
+
+
 class Sprite
 {
 private:
 	int m_height, m_width;
 	std::string m_file_path;
 	SDL_Texture* m_p_texture;
+	
 public:
 	std::string M_sprite_name;
 	// Constructor populates private variables
@@ -30,6 +33,8 @@ public:
 	{
 		return m_width;
 	}
+
+	
 
 	static Sprite* GetOrCreateSprite(std::string file_path);
 };

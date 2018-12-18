@@ -3,11 +3,14 @@
 #include "Component.h"
 #include <string>
 #include "Sprite.h"
+#include "Vector2.h"
+
+
 
 class SpriteRenderer : public Component
 {
-private:
 	
+
 public:
 	void Spawn() override {}
 	void Update() override;
@@ -20,5 +23,13 @@ public:
 
 	void ChangeSprite(Sprite* sprite);
 	~SpriteRenderer();
+
 };
 #endif
+
+//
+
+// 0, 16, 32, 48
+// 16 x   x   x
+// 32 x   x   x
+// 48 x   x   x

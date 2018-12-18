@@ -85,7 +85,7 @@ GameState Game::GetGameState() const
 	return m_game_state;
 }
 
-void Game::SetGameState(GameState game_state)
+void Game::SetGameState(const GameState game_state)
 {
 	m_game_state = game_state;
 }

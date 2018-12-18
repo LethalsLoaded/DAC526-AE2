@@ -1,15 +1,18 @@
 #include "Level.h"
 #include "Game.h"
 #include <fstream>
+#include <algorithm>
 #include "Block.h"
 #include "NonPlayableCharacter.h"
 #include "SpriteRenderer.h"
 #include "Player.h"
+#include "Collider.h"
 
 Level::Level(std::string path_to_level_data)
 {
 	m_level_path = path_to_level_data;
 	Game::GetInstance()->AddGameLevel(this);
+	Game::GetInstance()->SetGameState(GameState::TRANSITION);
 	std::ifstream file_stream("Assets/Levels/" + m_level_path);
 
 	std::string tempLine;
@@ -42,39 +45,48 @@ Level::Level(std::string path_to_level_data)
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/wall.bmp"));
 						auto const block = new_game_object->AddComponent<Block>();
 						block->M_isWall = true;
+						//new_game_object->AddComponent<Collider>();
 					}
 					break;
 				// ENEMY
 				case 'E':
 					{
-						new GameObject("Floor",
+					auto floor_object = new GameObject("floor_object_to_change",
 						new Vector2(x_spacing, y_spacing),
 						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
+					AddGameObjectToLevel(floor_object);
 						new_game_object->M_name = "Enemy";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/enemy.bmp"));
-						//auto const npc = new_game_object->AddComponent<NonPlayableCharacter>();
+						new_game_object->M_render_order = 10;
+						auto const npc = new_game_object->AddComponent<NonPlayableCharacter>();
+						new_game_object->AddComponent<Collider>();
 					}
 					break;
 				// TARGET
 				case 'T':
 					{
-						new GameObject("Floor",
+					auto floor_object = new GameObject("floor_object_to_change",
 						new Vector2(x_spacing, y_spacing),
 						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
+					AddGameObjectToLevel(floor_object);
 						new_game_object->M_name = "Target";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/target.bmp"));
-						//auto const target = new_game_object->AddComponent<NonPlayableCharacter>();
+						auto const target = new_game_object->AddComponent<NonPlayableCharacter>();
+						new_game_object->M_render_order = 10;
 					}
 					break;
 				case 'P':
 					{
-						new GameObject("Floor", 
+						new_game_object->AddComponent<Collider>();
+
+						auto floor_object = new GameObject("floor_object_to_change", 
 							new Vector2(x_spacing, y_spacing),
 							Sprite::GetOrCreateSprite("Assets/floor.bmp"));
-						new_game_object->M_name = "IM HERE PLZ";
+						AddGameObjectToLevel(floor_object);
+						new_game_object->M_name = "Player";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/player.bmp"));
-						auto const player = new_game_object->AddComponent<Player>();
-						new_game_object->M_render_order = 10;
+						new_game_object->AddComponent<Player>();
+						new_game_object->M_render_order = 15;
 					}
 					break;
 				case '.':
@@ -88,6 +100,10 @@ Level::Level(std::string path_to_level_data)
 		}
 		y_spacing += Game::RELATIVE_TILE_SPACE;
 	}
+
+	Game::GetInstance()->SetGameState(GameState::IN_PROGRESS);
+	printf("STATE: %d\n", Game::GetInstance()->GetGameState());
+
 }
 
 std::vector<GameObject*> Level::GetGameObjects() const
@@ -99,13 +115,14 @@ void Level::Render()
 {
 	if (!M_is_active) return;
 
-	std::sort(m_p_game_objects.begin(), m_p_game_objects.end());
-	
-	for(auto game_object : m_p_game_objects)
-	{
-		for(auto component : game_object->GetComponents())
+	std::sort(m_p_game_objects.begin(), m_p_game_objects.end(), CallMeSomething());
+	//printf("STATE: %d\n", Game::GetInstance()->GetGameState());
+	if(Game::GetInstance()->GetGameState() == GameState::IN_PROGRESS)
+		for(auto game_object : m_p_game_objects)
 		{
-			component->Update();
+			for(auto component : game_object->GetComponents())
+			{
+				component->Update();
+			}
 		}
-	}
 }
