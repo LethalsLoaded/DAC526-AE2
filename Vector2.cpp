@@ -30,3 +30,11 @@ Vector2 Vector2::Translate(const Vector2& vectorB)
 	const Vector2 result(result_x, result_y);
 	return result;
 }
+
+Vector2 Vector2::operator*(const int& i)
+{
+	this->m_x *= i;
+	this->m_y *= i;
+
+	return *this;
+}

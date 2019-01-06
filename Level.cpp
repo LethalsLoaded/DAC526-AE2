@@ -41,6 +41,7 @@ Level::Level(std::string path_to_level_data)
 			{
 				case 'W':
 					{
+					new_game_object->AddComponent<Collider>();
 						new_game_object->M_name = "Wall";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/wall.bmp"));
 						auto const block = new_game_object->AddComponent<Block>();
@@ -54,12 +55,13 @@ Level::Level(std::string path_to_level_data)
 					auto floor_object = new GameObject("floor_object_to_change",
 						new Vector2(x_spacing, y_spacing),
 						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
-					AddGameObjectToLevel(floor_object);
+						AddGameObjectToLevel(floor_object);
 						new_game_object->M_name = "Enemy";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/enemy.bmp"));
 						new_game_object->M_render_order = 10;
 						auto const npc = new_game_object->AddComponent<NonPlayableCharacter>();
-						new_game_object->AddComponent<Collider>();
+						auto collider = new_game_object->AddComponent<Collider>();
+						collider->M_isTrigger = true;
 					}
 					break;
 				// TARGET
@@ -68,11 +70,13 @@ Level::Level(std::string path_to_level_data)
 					auto floor_object = new GameObject("floor_object_to_change",
 						new Vector2(x_spacing, y_spacing),
 						Sprite::GetOrCreateSprite("Assets/floor.bmp"));
-					AddGameObjectToLevel(floor_object);
+						AddGameObjectToLevel(floor_object);
 						new_game_object->M_name = "Target";
 						new_sprite_rend->ChangeSprite(Sprite::GetOrCreateSprite("Assets/target.bmp"));
 						auto const target = new_game_object->AddComponent<NonPlayableCharacter>();
 						new_game_object->M_render_order = 10;
+						auto collider = new_game_object->AddComponent<Collider>();
+						collider->M_isTrigger = true;
 					}
 					break;
 				case 'P':

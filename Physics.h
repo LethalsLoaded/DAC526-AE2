@@ -13,6 +13,8 @@ private:
 	float m_mass;
 public:
 	Vector2* M_velocity = new Vector2();
+	bool M_collisionFixed = true;
+	bool M_isInTrigger = true;
 };
 
 #endif

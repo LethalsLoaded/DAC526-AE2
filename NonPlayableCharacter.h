@@ -9,13 +9,15 @@
 class NonPlayableCharacter : public Component, public Entity
 {
 private:
-	Vector2 m_target_location;
+	std::vector<Vector2> m_node_locations;
+	int m_current_point = 0;
 	bool m_is_running = false;
 
+
 public:
-	void Spawn() override {}
-	void Update() override {}
-	void Destroy() override {}
+	void Spawn() override;
+	void Update() override;
+	void Destroy() override;
 protected:
 	void ExecuteAction(Action action) override {}
 };

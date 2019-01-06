@@ -15,6 +15,7 @@ class Collider : public Component
 private:
 	Bounding_Box* m_p_bounding_box;
 public:
+	bool M_isTrigger = false;
 	Vector2* M_last_safe_pos;
 
 	Collider()
@@ -69,10 +70,10 @@ public:
 
 	}
 
-	Collider* IsCollidingCollider() const
+	GameObject* IsCollidingCollider() const
 	{
 		bool horizontal_value = false, vertical_value = false;
-		Collider* return_value = nullptr;
+		GameObject* return_value = nullptr;
 
 		for (auto i : GameObject::GetGameObjectsWithComponent<Collider>())
 		{
@@ -90,7 +91,7 @@ public:
 
 			if (vertical_value || horizontal_value)
 			{
-				return_value = i->GetComponent<Collider>();
+				return_value = i;
 				break;
 			}
 		}
@@ -100,22 +101,27 @@ public:
 		return return_value;
 	}
 
-	bool IsColliding() const
+	bool IsColliding(bool ignore_triggers = false) const
 	{
 		bool horizontal_value = false, vertical_value = false;
 		for (auto i : GameObject::GetGameObjectsWithComponent<Collider>())
 		{
 			if (i->M_id.GetID() == m_p_game_object->M_id.GetID()) continue;
+			if (ignore_triggers)
+				if (M_isTrigger) continue;
 
 			if (m_p_game_object->GetComponent<Physics>()->M_velocity->m_x > 0)
 				horizontal_value = CheckRight(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
 			else
 				horizontal_value = CheckLeft(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
 
-			if (m_p_game_object->GetComponent<Physics>()->M_velocity->m_y > 0)
-				vertical_value = CheckTop(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
-			else
-				vertical_value = CheckBottom(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
+			if (m_p_game_object->GetComponent<Physics>()->M_velocity->m_y != 0)
+			{
+				if (m_p_game_object->GetComponent<Physics>()->M_velocity->m_y > 0)
+					vertical_value = CheckTop(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
+				else
+					vertical_value = CheckBottom(m_p_bounding_box, i->GetComponent<Collider>()->m_p_bounding_box);
+			}
 
 			if (vertical_value || horizontal_value) break;
 		}
@@ -125,7 +131,7 @@ public:
 		return false;
 	}
 
-	static const int OFFSET = 1;
+	static const int OFFSET = 0;
 
 	static bool CheckRight(Bounding_Box* box_a, Bounding_Box* box_b)
 	{

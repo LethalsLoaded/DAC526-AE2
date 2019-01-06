@@ -18,13 +18,27 @@ void Physics::Update()
 
 	//if (M_velocity->m_y > 0) m_p_game_object->SetDirection(SOUTH);
 	//else m_p_game_object->SetDirection(NORTH);
-
-	if (m_p_game_object->GetComponent<Collider>()->IsColliding())
+	
+	if (m_p_game_object->GetComponent<Collider>()->IsColliding() && M_collisionFixed)
 	{
-		M_velocity = new Vector2(0, 0);
-		m_p_game_object->M_position = m_p_game_object->GetComponent<Collider>()->M_last_safe_pos;
-		return;
+		auto collider_game_object = m_p_game_object->GetComponent<Collider>()->IsCollidingCollider();
+		if (!collider_game_object->GetComponent<Collider>()->M_isTrigger)
+		{
+			M_velocity->m_y;
+			M_velocity = new Vector2(M_velocity->m_x * -1, M_velocity->m_y * -1);
+			printf("NEW VELOCITY: ( %f , %f )\n", M_velocity->m_x, M_velocity->m_y);
+			M_collisionFixed = false;
+		}
+		else if (!M_isInTrigger)
+		{
+			printf("hi im %s )\n", collider_game_object->M_name.c_str());
+			if (collider_game_object->M_name == "Target")
+				printf("Game has been won.");
+			if (collider_game_object->M_name == "Enemy")
+				printf("Game has been lost.");
+		}
 	}
+
 	const float speed_reduction = 1.0f;
 	const float speed_limit = 100.0f;
 
@@ -43,6 +57,13 @@ void Physics::Update()
 		));
 
 	m_p_game_object->GetComponent<Collider>()->M_last_safe_pos = m_p_game_object->M_position;
+
+	if (!m_p_game_object->GetComponent<Collider>()->IsColliding())
+	{
+		M_collisionFixed = true;
+		M_isInTrigger = false;
+	}
+	// colliding already so M_collisionfixed is never set to true because im still colliding
 	}
 
 void Physics::Destroy()

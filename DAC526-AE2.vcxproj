@@ -85,12 +85,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\University_Work\Year 2 %2818-19%29\Computer Game Programming\DAC526-AE2\SDL\include;C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>Components.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\University_Work\Year 2 %2818-19%29\Computer Game Programming\DAC526-AE2\SDL\lib\x64;C:\Users\AOdwald\Desktop\University Work %2818-19%29\Semester 1\Programming\DAC526-AE2\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -139,6 +139,7 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="NonPlayableCharacter.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
