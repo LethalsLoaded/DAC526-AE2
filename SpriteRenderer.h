@@ -13,6 +13,11 @@ class SpriteRenderer : public Component
 
 public:
 	void Spawn() override {}
+	/*
+	 * Runs every frame; draws the sprite
+	 * attached to the component every
+	 * frame.
+	 */
 	void Update() override;
 	void Destroy() override {}
 
@@ -21,6 +26,9 @@ public:
 	float m_size = 1.0f;
 	Sprite* m_p_sprite;
 
+	/*
+	 * Changes what sprite is drawn.
+	 */
 	void ChangeSprite(Sprite* sprite);
 	~SpriteRenderer();
 

@@ -33,14 +33,20 @@ void Physics::Update()
 		{
 			printf("hi im %s )\n", collider_game_object->M_name.c_str());
 			if (collider_game_object->M_name == "Target")
-				printf("Game has been won.");
+			{
+				LevelManager::NextLevel();
+				return;
+			}
 			if (collider_game_object->M_name == "Enemy")
-				printf("Game has been lost.");
+			{
+				LevelManager::RestartLevel();
+				return;
+			}
 		}
 	}
 
-	const float speed_reduction = 1.0f;
-	const float speed_limit = 100.0f;
+	const auto speed_reduction = 1.0f;
+	const auto speed_limit = 100.0f;
 
 	if (M_velocity->m_x > 0) M_velocity->Translate(Vector2(-speed_reduction, 0));
 	if (M_velocity->m_x < 0) M_velocity->Translate(Vector2(speed_reduction, 0));

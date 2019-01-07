@@ -10,10 +10,11 @@
 
 Level::Level(std::string path_to_level_data)
 {
-	m_level_path = path_to_level_data;
+	enemy_count = 0;
+	m_level_name = path_to_level_data;
 	Game::GetInstance()->AddGameLevel(this);
 	Game::GetInstance()->SetGameState(GameState::TRANSITION);
-	std::ifstream file_stream("Assets/Levels/" + m_level_path);
+	std::ifstream file_stream("Assets/Levels/" + m_level_name);
 
 	std::string tempLine;
 	while (std::getline(file_stream, tempLine))
@@ -36,7 +37,7 @@ Level::Level(std::string path_to_level_data)
 			auto new_game_object = new GameObject("Wall", new Vector2(x_spacing, y_spacing));
 			AddGameObjectToLevel(new_game_object);
 			auto new_sprite_rend = new_game_object->AddComponent<SpriteRenderer>();
-
+			
 			switch(x_tile)
 			{
 				case 'W':
@@ -62,6 +63,37 @@ Level::Level(std::string path_to_level_data)
 						auto const npc = new_game_object->AddComponent<NonPlayableCharacter>();
 						auto collider = new_game_object->AddComponent<Collider>();
 						collider->M_isTrigger = true;
+						if(m_level_name == "Level_1.txt")
+						{
+							npc->m_node_locations.emplace_back(370, 64);
+							npc->m_node_locations.emplace_back(370, 100);
+							npc->m_node_locations.emplace_back(370, 235);
+							npc->m_node_locations.emplace_back(550, 235);
+							npc->m_node_locations.emplace_back(550, 125);
+							npc->m_node_locations.emplace_back(370, 120);
+						}
+						else
+						{
+							if (enemy_count == 0)
+							{
+								npc->m_node_locations.emplace_back(370, 64);
+								npc->m_node_locations.emplace_back(370, 100);
+								npc->m_node_locations.emplace_back(370, 235);
+								npc->m_node_locations.emplace_back(550, 235);
+								npc->m_node_locations.emplace_back(550, 125);
+								npc->m_node_locations.emplace_back(370, 120);
+							}
+							else
+							{
+								npc->m_node_locations.emplace_back(128, 90);
+								npc->m_node_locations.emplace_back(362, 90);
+								npc->m_node_locations.emplace_back(352, 320);
+								npc->m_node_locations.emplace_back(385, 320);
+								npc->m_node_locations.emplace_back(385, 385);
+								npc->m_node_locations.emplace_back(128, 385);
+							}
+							enemy_count++;
+						}
 					}
 					break;
 				// TARGET
@@ -110,6 +142,12 @@ Level::Level(std::string path_to_level_data)
 
 }
 
+Level::~Level()
+{
+	for (auto i : m_p_game_objects)
+		delete(i);
+}
+
 std::vector<GameObject*> Level::GetGameObjects() const
 {
 	return m_p_game_objects;
@@ -119,7 +157,7 @@ void Level::Render()
 {
 	if (!M_is_active) return;
 
-	std::sort(m_p_game_objects.begin(), m_p_game_objects.end(), CallMeSomething());
+	std::sort(m_p_game_objects.begin(), m_p_game_objects.end(), OverloadOperator());
 	//printf("STATE: %d\n", Game::GetInstance()->GetGameState());
 	if(Game::GetInstance()->GetGameState() == GameState::IN_PROGRESS)
 		for(auto game_object : m_p_game_objects)

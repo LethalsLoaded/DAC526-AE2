@@ -21,7 +21,14 @@ public:
 			m_p_instance = new InputHandler();
 		return m_p_instance;
 	}
+	/*
+	 * Checks for any changes within the key map
+	 */
 	void Update();
+
+	/*
+	 * Returns if a specific key is pressed
+	 */
 	bool IsKeyPressed(SDL_Scancode key);
 
 	void OnKeyDown();

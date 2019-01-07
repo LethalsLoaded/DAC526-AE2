@@ -39,6 +39,13 @@ public:
 		m_direction = direction;
 	}
 
+	/*
+	 * This method returns either a nullptr or a Component
+	 * type object.
+	 * 
+	 * If nullptr is returned that means that either there was no
+	 * component present or Q did not derive from component.
+	 */
 	template <class Q> Q* GetComponent()
 	{
 		// Checking if object is derived from Component
@@ -64,6 +71,9 @@ public:
 		return nullptr;
 	}
 
+	/*
+	 * This method checks if a game object has a certain component.
+	 */
 	template <class Q> static bool GameObjectHasComponent(GameObject* game_object)
 	{
 		// Looking for the component
@@ -79,6 +89,10 @@ public:
 		return false;
 	}
 
+	/*
+	 * Adds a component (Q) to a game object which then forces its
+	 * Update() to run. Returns the component created.
+	 */
 	template <class Q> Q* AddComponent()
 	{
 		//Vector2* myVector = new Vector2(x, y);
@@ -90,6 +104,9 @@ public:
 		return new_component;
 	}
 
+	/*
+	 * Removes a component from existance of the application
+	 */
 	template <class Q> void DeleteComponent()
 	{
 		for(int i = 0; i < m_components.size(); i++)
@@ -103,6 +120,10 @@ public:
 		}
 	}
 
+	/*
+	 * Static method which gets all game objects in active level with a specific
+	 * component. Lets say, Linq for C++
+	 */
 	template <class Q> static std::vector<GameObject*> GetGameObjectsWithComponent()
 	{
 		std::vector<GameObject*> return_vector;
@@ -130,7 +151,13 @@ public:
 
 };
 
-struct CallMeSomething
+/*
+ * Operator that is used when sorting to ensure highest render order
+ * goes first and lowest last.
+ * 
+ * Makes the array/vector into perfect order
+ */
+struct OverloadOperator
 {
 	bool operator()(GameObject *ob1, GameObject *ob2) const
 	{

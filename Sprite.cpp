@@ -61,7 +61,13 @@ Sprite::Sprite(std::string file_path)
 
 Sprite::~Sprite()
 {
-	if (m_p_texture) SDL_DestroyTexture(m_p_texture);
+	//try {
+	//	if (m_p_texture) SDL_DestroyTexture(m_p_texture);
+	//}
+	//catch(...)
+	//{
+	//	// fuck it
+	//}
 }
 
 std::string Sprite::GetFilePath()

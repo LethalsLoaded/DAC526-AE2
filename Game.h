@@ -46,7 +46,6 @@ public:
 	const int FRAME_DELAY = 1000 / FRAMES_PER_SECOND;
 	static const int RELATIVE_TILE_SPACE = 32;
 
-	//std::vector<Sprite*> M_p_sprites;
 	std::unordered_map<Sprite*, GameObject*> M_p_sprites;
 
 	static Game* GetInstance();

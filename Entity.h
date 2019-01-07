@@ -24,11 +24,13 @@ enum ActionState
 class Entity
 {
 	std::string m_display_name = "Anonymous Entity";
-	float m_speed = 1.0f;
 
 protected:
 	std::queue<Action> m_action_queue;
 	virtual void ExecuteAction(Action action) = 0 {}
+public:
+	float m_speed = 0.5f;
+
 };
 
 #endif
